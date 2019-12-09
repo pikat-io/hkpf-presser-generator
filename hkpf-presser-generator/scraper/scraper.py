@@ -21,6 +21,7 @@ def scrape_presser(url):
             paragraphs = content.find_all("p")
             for paragraph in paragraphs:
                 result += paragraph.get_text()
+            result += "\n"
 
         driver.close()
         return result

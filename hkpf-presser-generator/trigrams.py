@@ -3,22 +3,21 @@ from collections import defaultdict
 import random
 import re
 
-
 punctuation = ['.', ',', '!', '?', ':', ';']
 sentence_terminators = ['.', '!', '?']
 
-# there's an empty sentence at the end, but whatever
-# inputs definitely need to be cleaned better, lots of random whitespace in there still
-def clean_text(raw_text):
-    clean_text = re.sub('\n ', '\n', raw_text)
-    clean_text = re.sub(r'(\n\s*)+\n', '\n\n', clean_text)
 
-    words = re.split('\s', clean_text)
+# there's an empty sentence at the end, but whatever
+def clean_raw_text(raw):
+    clean = re.sub('\n ', '\n', raw)
+    clean = re.sub(r'(\n\s*)+\n', '\n\n', clean)
+
+    words = re.split('\s', clean)
     sentence_index = 0
     result = [[]]
 
     for word in words:
-        if (word.endswith(tuple(punctuation))):
+        if word.endswith(tuple(punctuation)):
             result[sentence_index].append(word[:-1])
             result[sentence_index].append(word[-1])
 
@@ -39,7 +38,7 @@ def create_model(sentences):
     # Count frequency of co-occurrence
     for sentence in sentences:
         for w1, w2, w3 in trigrams(sentence, pad_right=True, pad_left=True):
-            model[(w1, w2)][w3] += 1 # increments frequency of w3 when preceded by w1 and w2
+            model[(w1, w2)][w3] += 1  # increments frequency of w3 when preceded by w1 and w2
 
     # Transform the counts to probabilities
     for w1_w2 in model:
@@ -54,7 +53,7 @@ def create_model(sentences):
 def create_sentence_starters(sentences):
     starting_words = defaultdict(lambda: 0)
 
-    for sentence in input:
+    for sentence in sentences:
         if len(sentence) >= 2:
             starting_words[(sentence[0], sentence[1])] += 1
 
@@ -76,10 +75,8 @@ def get_random_starting_words(sentence_starters):
             return [words[0], words[1]]
 
 
-
 # text is an array of words to start the sentence with
 def generate_sentence(model, text, word_limit):
-
     sentence_finished = False
     word_count = 0
 
@@ -99,26 +96,26 @@ def generate_sentence(model, text, word_limit):
         if text[-2:] == [None, None]:
             sentence_finished = True
 
+    result = ""
+    last_word = None
+    for word in text:
+        if last_word is not None and word not in punctuation:
+            result += " "
+
+        if word is not None:
+            result += (word)
+
+        last_word = word
+
+    return result.strip()
 
 
-    return ' '.join([t for t in text if t])
+def generate_random_sentence():
+    with open("raw", "r", encoding="utf-8") as f:
+        raw_text = f.read()
+        clean_text = clean_raw_text(raw_text)
 
-
-
-
-
-input = None
-
-with open("raw", "r", encoding="utf-8") as f:
-    raw_text = f.read()
-    input = clean_text(raw_text)
-
-model = create_model(input)
-sentence_starters = create_sentence_starters(input)
-starting_words = get_random_starting_words(sentence_starters)
-sentence = generate_sentence(model, starting_words, 100000)
-print(sentence)
-
-
-
-
+    model = create_model(clean_text)
+    sentence_starters = create_sentence_starters(clean_text)
+    starting_words = get_random_starting_words(sentence_starters)
+    return generate_sentence(model, starting_words, 100000)
