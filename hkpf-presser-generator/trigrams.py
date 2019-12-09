@@ -4,6 +4,9 @@ import random
 import re
 
 
+punctuation = ['.', ',', '!', '?', ':', ';']
+sentence_terminators = ['.', '!', '?']
+
 # there's an empty sentence at the end, but whatever
 # inputs definitely need to be cleaned better, lots of random whitespace in there still
 def clean_text(raw_text):
@@ -15,11 +18,11 @@ def clean_text(raw_text):
     result = [[]]
 
     for word in words:
-        if (word.endswith(('.', ',', '!', '?', ':', ';'))):
+        if (word.endswith(tuple(punctuation))):
             result[sentence_index].append(word[:-1])
             result[sentence_index].append(word[-1])
 
-            if word.endswith(('.', '!', '?')):
+            if word.endswith(tuple(sentence_terminators)):
                 sentence_index += 1
                 result.append([])
         else:
@@ -73,6 +76,7 @@ def get_random_starting_words(sentence_starters):
             return [words[0], words[1]]
 
 
+
 # text is an array of words to start the sentence with
 def generate_sentence(model, text, word_limit):
 
@@ -95,7 +99,12 @@ def generate_sentence(model, text, word_limit):
         if text[-2:] == [None, None]:
             sentence_finished = True
 
-    return (' '.join([t for t in text if t]))
+
+
+    return ' '.join([t for t in text if t])
+
+
+
 
 
 input = None

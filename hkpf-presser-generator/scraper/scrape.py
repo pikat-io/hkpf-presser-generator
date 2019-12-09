@@ -1,4 +1,4 @@
-import presser_scraper
+import scraper
 
 
 # NOVEMBER 2014 is the first month that the police force uses the fucky old template
@@ -15,12 +15,10 @@ urls = [
     "https://www.police.gov.hk/ppp_en/03_police_message/pr/pr_archives.html?month=201905"
 ]
 
-scraper = presser_scraper.PresserScraper()
-
 f = open('raw', "w+", encoding="utf-8")
 
 for url in urls:
-    result = scraper.scrape_new_presser(url)
+    result = scraper.scrape_presser(url)
     f.write(result)
 
 f.close()
