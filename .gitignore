@@ -130,5 +130,6 @@ dmypy.json
 
 # Output
 output/
+output.zip
 # we use pipenv here
 requirements.txt
