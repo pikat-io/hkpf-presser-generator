@@ -8,7 +8,7 @@ sentence_terminators = ['.', '!', '?']
 
 
 # there's an empty sentence at the end, but whatever
-def clean_raw_text(raw):
+def __clean_raw_text(raw):
     clean = re.sub('\n ', '\n', raw)
     clean = re.sub(r'(\n\s*)+\n', '\n\n', clean)
 
@@ -31,7 +31,7 @@ def clean_raw_text(raw):
 
 
 # a "sentence" is an array of words, terminated by a full stop.
-def create_model(sentences):
+def __create_model(sentences):
     # Create empty model
     model = defaultdict(lambda: defaultdict(lambda: 0))
 
@@ -50,7 +50,7 @@ def create_model(sentences):
 
 
 # returns probabilities that sentences start with certain words
-def create_sentence_starters(sentences):
+def __create_sentence_starters(sentences):
     starting_words = defaultdict(lambda: 0)
 
     for sentence in sentences:
@@ -65,7 +65,7 @@ def create_sentence_starters(sentences):
     return starting_words
 
 
-def get_random_starting_words(sentence_starters):
+def __get_random_starting_words(sentence_starters):
     r = random.random()
     accumulator = .0
 
@@ -76,7 +76,7 @@ def get_random_starting_words(sentence_starters):
 
 
 # text is an array of words to start the sentence with
-def generate_sentence(model, text, word_limit):
+def __generate_sentence(model, text, word_limit):
     sentence_finished = False
     word_count = 0
 
@@ -113,9 +113,9 @@ def generate_sentence(model, text, word_limit):
 def generate_random_sentence():
     with open("raw", "r", encoding="utf-8") as f:
         raw_text = f.read()
-        clean_text = clean_raw_text(raw_text)
+        clean_text = __clean_raw_text(raw_text)
 
-    model = create_model(clean_text)
-    sentence_starters = create_sentence_starters(clean_text)
-    starting_words = get_random_starting_words(sentence_starters)
-    return generate_sentence(model, starting_words, 100000)
+    model = __create_model(clean_text)
+    sentence_starters = __create_sentence_starters(clean_text)
+    starting_words = __get_random_starting_words(sentence_starters)
+    return __generate_sentence(model, starting_words, 100000)
