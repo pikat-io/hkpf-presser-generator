@@ -46,8 +46,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.twitter (1)">
-    <configuration name="presser_scraper" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.awslambda">
+    <configuration name="awslambda" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hkpf_presser_generator" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -55,11 +55,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hkpf-presser-generator/scraper" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hkpf-presser-generator" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="E:\dev\hkpf-presser-generator\hkpf-presser-generator\scraper\scraper.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hkpf-presser-generator/awslambda.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -177,17 +177,17 @@
       <item itemvalue="Python.trigrams" />
       <item itemvalue="Python.twitter (1)" />
       <item itemvalue="Python.trigrams (1)" />
-      <item itemvalue="Python.presser_scraper" />
       <item itemvalue="Python.scrape" />
       <item itemvalue="Python.scraper" />
+      <item itemvalue="Python.awslambda" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.awslambda" />
         <item itemvalue="Python.twitter (1)" />
         <item itemvalue="Python.trigrams (1)" />
         <item itemvalue="Python.scrape" />
         <item itemvalue="Python.scraper" />
-        <item itemvalue="Python.presser_scraper" />
       </list>
     </recent_temporary>
   </component>

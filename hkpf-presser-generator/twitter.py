@@ -1,7 +1,5 @@
 import tweepy
-from datetime import date
 import os
-import trigrams
 
 # divide the message up into 280-character tweets
 def __split_into_tweets(message):
@@ -47,14 +45,25 @@ def __post_tweets(tweets):
 
     api = tweepy.API(auth)
 
-    previous_response = None
-    for tweet in tweets:
-        if previous_response is None:
-            previous_response = api.update_status(tweet)
-        else:
-            previous_response = api.update_status(tweet, previous_response.id)
+    try:
+        previous_response = None
+        for tweet in tweets:
+            if previous_response is None:
+                previous_response = api.update_status(tweet)
+            else:
+                previous_response = api.update_status(tweet, previous_response.id)
+
+        return {
+            'status_code': 200,
+            'reason': None
+        }
+    except tweepy.TweepError as e:
+        return {
+            'status_code': e.response.status_code,
+            'reason': e.reason
+        }
 
 
 def tweet(message):
     tweets = __split_into_tweets(message)
-    __post_tweets(tweets)
+    return __post_tweets(tweets)
