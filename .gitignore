@@ -133,3 +133,6 @@ output/
 output.zip
 # we use pipenv here
 requirements.txt
+
+# VS code
+.vscode/
